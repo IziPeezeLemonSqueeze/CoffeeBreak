@@ -1,0 +1,16 @@
+{
+  "name": "coffeebreak",
+  "version": "1.0.0",
+  "description": "",
+  "license": "See License file",
+  "author": "Stefano Pastore p.stefano92@gmail.com",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@paymoapp/real-idle": "^1.1.1",
+    "robotjs": "^0.6.0"
+  }
+}
