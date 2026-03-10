@@ -7,10 +7,10 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pkg": "pkg index.js -t node22-win-x64 -o ./dist/CoffeeBreak.exe",
+    "ico": "npx --yes resedit-cli ./dist/CoffeeBreak.exe ./dist/CoffeeBreak.exe --icon 1,./asset/caffe.ico --company-name \"Stefano Pastore\" --file-version 0.1.0.0"
   },
-  "dependencies": {
-    "@paymoapp/real-idle": "^1.1.1",
-    "robotjs": "^0.6.0"
+  "devDependencies": {
+    "@yao-pkg/pkg": "^6.14.1"
   }
 }
