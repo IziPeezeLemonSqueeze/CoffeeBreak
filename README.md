@@ -1,26 +1,45 @@
-﻿# CoffeeBreak
+# CoffeeBreak
 
-CoffeeBreak is a small Windows utility written in Go that keeps the machine active by sending a synthetic `Shift` key press when user inactivity reaches a threshold.
+Keep your Windows session awake with a tiny Go utility that checks user idle time and sends a synthetic `Shift` press when inactivity gets too high.
 
-## What It Does
+![Platform](https://img.shields.io/badge/platform-Windows-0078D6?style=flat-square)
+![Language](https://img.shields.io/badge/language-Go-00ADD8?style=flat-square)
+![License](https://img.shields.io/badge/license-See%20License-blue?style=flat-square)
 
-- Reads idle time from Windows APIs (`GetLastInputInfo`, `GetTickCount64`)
-- Checks idle status every 5 seconds
-- Sends `Shift` key down/up with `SendInput` when idle time is >= 290 seconds
-- Supports debug mode with `--d`
+## Overview
+
+CoffeeBreak is a lightweight background utility for Windows.  
+It reads system idle time using native Win32 APIs and prevents lock/sleep side effects triggered by inactivity policies.
+
+## Features
+
+- Native Windows API integration (`user32.dll`, `kernel32.dll`)
+- Idle detection based on real input inactivity
+- Automatic keep-awake input (`Shift` key down/up)
+- Debug mode with live idle output (`--d`)
+- Single static executable build with Go
+
+## How It Works
+
+1. Reads idle time from `GetLastInputInfo` + `GetTickCount64`
+2. Loops every `5s`
+3. If idle is `>= 290s`, sends `Shift` via `SendInput`
+4. In debug mode, prints current idle state continuously
 
 ## Requirements
 
-- Windows (uses `user32.dll` and `kernel32.dll`)
+- Windows
 - Go `1.25.6` or newer
 
-## Run
+## Quick Start
+
+Run directly:
 
 ```bash
 go run .
 ```
 
-Debug mode:
+Run with debug logs:
 
 ```bash
 go run . --d
@@ -28,33 +47,62 @@ go run . --d
 
 ## Build
 
-```bash
-go build -o CoffeeBreak.exe .
-```
-
-Run the executable:
+Build executable:
 
 ```bash
-.\CoffeeBreak.exe
+go build -o dist/CoffeeBreak.exe .
 ```
 
-With debug:
+Run executable:
 
 ```bash
-.\CoffeeBreak.exe --d
+.\dist\CoffeeBreak.exe
 ```
 
-## Behavior Details
+Run executable in debug mode:
 
-- Loop interval: `5s`
-- Idle threshold for key press: `290s`
-- Idle status label switches to `idle` at `>= 300s` in debug output
+```bash
+.\dist\CoffeeBreak.exe --d
+```
 
-## Project Files
+## Icon In Executable
 
-- `main.go`: app entry point and Windows idle/input logic
-- `go.mod`: module and Go version
-- `asset/caffe.ico`: icon resource
+This repository already includes `rsrc.syso`, so `go build` embeds the app icon automatically.
+
+If you change the icon (`asset/caffe.ico`), regenerate resources before building:
+
+```bash
+rsrc -ico asset/caffe.ico -o rsrc.syso
+go build -o dist/CoffeeBreak.exe .
+```
+
+Install `rsrc` (one time):
+
+```bash
+go install github.com/akavel/rsrc@latest
+```
+
+## Runtime Configuration (Current Defaults)
+
+| Setting | Value | Source |
+| --- | --- | --- |
+| Poll interval | `5s` | `time.Sleep(5 * time.Second)` |
+| Keep-awake trigger | `290s` idle | `if idleSeconds >= 290` |
+| Debug idle label threshold | `300s` idle | `if idleSeconds >= 300` |
+| Simulated key | `Shift` | `VK_SHIFT` |
+
+## Project Layout
+
+- `main.go` - app logic and Windows interop
+- `go.mod` - Go module definition
+- `asset/caffe.ico` - source icon
+- `rsrc.syso` - Windows resource blob included in build
+
+## Notes
+
+- Works only on Windows.
+- Sends synthetic keyboard input locally; no network calls are made.
+- If Explorer still shows an old icon, rename the EXE or restart Explorer to refresh icon cache.
 
 ## License
 

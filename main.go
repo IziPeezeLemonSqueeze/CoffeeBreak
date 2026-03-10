@@ -71,19 +71,6 @@ func main() {
 
 	fmt.Println("CoffeeBreak avviato...")
 
-	
-	ciccio := map[string]map[string]int {
-	}
-
-	if ciccio["mariuzzo"] == nil {
-		fmt.Println("MARIUZZO NON ESISTE!")
-
-		ciccio["mariuzzo"] = map[string]int {
-		}
-	}
-
-	cicco["mariuzzo"]["palombaro"] = 3
-
 	for {
 		idleSeconds := getIdleSeconds()
 		idleStatus := "active"
