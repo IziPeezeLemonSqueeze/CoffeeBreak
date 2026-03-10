@@ -1,103 +1,66 @@
-# ☕ CoffeeBreak
+﻿# CoffeeBreak
 
-> A smart app that keeps your computer awake while you relax with a coffee ☕
+CoffeeBreak is a small Windows utility written in Go that keeps the machine active by sending a synthetic `Shift` key press when user inactivity reaches a threshold.
 
-![Node.js](https://img.shields.io/badge/Node.js-v14+-339933?style=flat-square&logo=nodedotjs)
-![License](https://img.shields.io/badge/License-See%20License%20File-blue?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+## What It Does
 
-## 🎯 Description
+- Reads idle time from Windows APIs (`GetLastInputInfo`, `GetTickCount64`)
+- Checks idle status every 5 seconds
+- Sends `Shift` key down/up with `SendInput` when idle time is >= 290 seconds
+- Supports debug mode with `--d`
 
-**CoffeeBreak** is a lightweight Node.js application that monitors system inactivity and prevents your computer from going into sleep mode. When the system remains inactive for more than 5 minutes, the app automatically sends a keyboard command (Shift key press) to keep your computer active.
+## Requirements
 
-Perfect for those who work in environments where security policies force the system to sleep after a short period of inactivity, or for anyone who simply wants to keep their workstation active during breaks.
+- Windows (uses `user32.dll` and `kernel32.dll`)
+- Go `1.25.6` or newer
 
-## ✨ Features
+## Run
 
-- 🔍 **Smart Monitoring**: Detects system inactivity state in real-time
-- ⏱️ **Customizable Timer**: Configure inactivity time (default: 290 seconds)
-- 🎮 **Discrete Automation**: Sends practically invisible keyboard commands
-- 🔧 **Debug Mode**: Use `--d` flag to display inactivity status
-- 🚀 **Lightweight & Fast**: Minimal resource consumption
-- 🛡️ **Cross-Platform**: Compatible with Windows, macOS, and Linux
-
-## 📋 Prerequisites
-
-- Node.js v14 or higher
-- npm or yarn
-
-## 🚀 Installation
-
-1. **Clone the repository**
-   ```bash
-   Download from Release
-   ```
-
-## 💻 Usage
-
-### Standard Start
-Launch the app in silent mode:
 ```bash
-node index.js
+go run .
 ```
 
-### Debug Mode
-Start with debug output to see inactivity status in real-time:
+Debug mode:
+
 ```bash
-node index.js --d
+go run . --d
 ```
 
-**Debug output:**
-```
-System idle state: active
-  - Idle seconds: 0
-System idle state: idle
-  - Idle seconds: 125
-```
+## Build
 
-### Continuous Execution (Background)
-On Windows, you can launch the app in background:
 ```bash
-start "" "C:\Program Files\nodejs\node.exe" "path\to\index.js"
+go build -o CoffeeBreak.exe .
 ```
 
-On Linux/macOS:
+Run the executable:
+
 ```bash
-nohup node index.js &
+.\CoffeeBreak.exe
 ```
 
-## 📦 Dependencies
+With debug:
 
-- **[@paymoapp/real-idle](https://www.npmjs.com/package/@paymoapp/real-idle)**: System inactivity state detection
-- **[robotjs](https://github.com/octalmage/robotjs)**: Mouse and keyboard control
+```bash
+.\CoffeeBreak.exe --d
+```
 
-## 🔐 Security
+## Behavior Details
 
-The app does not log or send data to remote servers. It works completely locally on your computer.
+- Loop interval: `5s`
+- Idle threshold for key press: `290s`
+- Idle status label switches to `idle` at `>= 300s` in debug output
 
-## 📝 License
+## Project Files
 
-See the [License](./License) file for details.
+- `main.go`: app entry point and Windows idle/input logic
+- `go.mod`: module and Go version
+- `asset/caffe.ico`: icon resource
 
-## 👤 Author
+## License
 
-**Stefano Pastore**
-- Email: p.stefano92@gmail.com
-- GitHub: [@IziPeezeLemonSqueeze](https://github.com/IziPeezeLemonSqueeze)
+See [License](./License).
 
-##  Contributing
+## Author
 
-No contribution is required. If you want to fork this project, send an email to p.stefano92@gmail.com
-
-## 🐛 Bug Report
-
-If you find a bug, please open an [Issue](https://github.com/IziPeezeLemonSqueeze/coffeebreak/issues) with:
-- Clear description of the problem
-- Steps to reproduce it
-- Operating system and Node.js version
-
-## 🎉 Enjoy Your Coffee Break! ☕
-
----
-
-**Made with ❤️ by Stefano Pastore**
+Stefano Pastore  
+p.stefano92@gmail.com

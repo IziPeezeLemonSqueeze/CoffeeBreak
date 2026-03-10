@@ -1,40 +1,42 @@
-# Dependencies
-node_modules/
-package-lock.json
-yarn.lock
+﻿# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.coverprofile
+coverage.out
 
-# Environment variables
+# Build directories
+bin/
+dist/
+build/
+out/
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Environment files
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
-# IDE & Editor
+# Logs and temp
+*.log
+.cache/
+tmp/
+temp/
+
+# Editors and IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# OS files
 .DS_Store
 Thumbs.db
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Build & Distribution
-dist/
-build/
-out/
-
-# Misc
-.cache/
-.claude/
-.temp/
-temp/
