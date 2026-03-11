@@ -38,12 +38,6 @@ Run with debug logs:
 go run . --d
 ```
 
-Send a modern Windows toast notification example:
-
-```bash
-go run . --toast
-```
-
 ## 📄 License
 
 See [License](./License).
