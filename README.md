@@ -1,6 +1,6 @@
 # ☕ CoffeeBreak
 
-Keep your Windows session awake with a tiny Go utility that checks user idle time and sends a synthetic `Shift` press when inactivity gets too high.
+Keep your Windows session awake with a tiny Go utility that checks user idle time and sends a synthetic `Shift` press.
 
 ![Platform](https://img.shields.io/badge/platform-Windows-0078D6?style=flat-square)
 ![Language](https://img.shields.io/badge/language-Go-00ADD8?style=flat-square)
@@ -9,7 +9,7 @@ Keep your Windows session awake with a tiny Go utility that checks user idle tim
 ## 🚀 Overview
 
 CoffeeBreak is a lightweight background utility for Windows.  
-It reads system idle time using native Win32 APIs and prevents lock/sleep side effects triggered by inactivity policies.
+It reads system idle time using native Win32 APIs and prevents lock/sleep.
 
 ## ✨ Features
 
@@ -36,6 +36,12 @@ Run with debug logs:
 
 ```bash
 go run . --d
+```
+
+Send a modern Windows toast notification example:
+
+```bash
+go run . --toast
 ```
 
 ## 📄 License
